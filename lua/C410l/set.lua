@@ -21,3 +21,5 @@ opt.termguicolors = true
 opt.conceallevel = 2
 opt.confirm = true
 opt.cursorline = true
+
+opt.colorcolumn = "80"

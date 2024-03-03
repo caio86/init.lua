@@ -8,7 +8,6 @@ local plugins = {
 
       wk.register({
         ["<leader>a"] = { mark.add_file, "Harpoon Add File"},
-        ["<leader>h"] = { ui.toggle_quick_menu, "Harpoon Toggle Quick Menu"},
         ["<C-e>"] = { ui.toggle_quick_menu, "Harpoon Toggle Quick Menu"},
 
         ["<leader>1"] = { function()
@@ -24,6 +23,34 @@ local plugins = {
         end, "Harpoon File 3"},
       })
     end
+  },
+  {
+    "mbbill/undotree",
+  },
+  {
+    "tpope/vim-fugitive",
+    lazy = true,
+    cmd = "Git",
+    keys = {
+      { "<leader>gs", "<cmd>Git<cr>", desc = "Fugitive" },
+    },
+  },
+  {
+    "kdheepak/lazygit.nvim",
+    cmd = {
+      "LazyGit",
+      "LazyGitConfig",
+      "LazyGitCurrentFile",
+      "LazyGitFilter",
+      "LazyGitFilterCurrentFile",
+    },
+    keys = {
+      { "<leader>gg", "<cmd>LazyGit<cr>", desc = "Lazygit" },
+    },
+    -- optional for floating window border decoration
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
   },
 }
 

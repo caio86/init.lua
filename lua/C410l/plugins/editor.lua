@@ -8,9 +8,10 @@ return {
     init = function()
       local builtin = require("telescope.builtin")
       local wk = require("which-key")
+      local config = require("C410l.plugins.configs.telescope")
 
       wk.register({
-        ["<space>"] = { builtin.find_files, "Find File"},
+        ["<space>"] = { config.project_files, "Find File"},
         f = {
           name = "+File",
           f = { builtin.find_files, "Find File" },

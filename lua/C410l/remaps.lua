@@ -20,6 +20,7 @@ end, { desc = "Tmux sessionizer" })
 
 -- keymaps
 map("n", "<leader>e", vim.cmd.Ex, { desc = "File Explorer" })
+map("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>", { desc = "Make it Rain" })
 
 -- new file
 map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })

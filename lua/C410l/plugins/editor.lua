@@ -5,7 +5,7 @@ return {
     "nvim-telescope/telescope.nvim",
     tag = "0.1.5",
     dependencies = { "nvim-lua/plenary.nvim" },
-    init = function()
+    config = function()
       local builtin = require("telescope.builtin")
       local wk = require("which-key")
       local config = require("C410l.plugins.configs.telescope")

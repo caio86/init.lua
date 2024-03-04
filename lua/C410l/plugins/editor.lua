@@ -4,7 +4,15 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     tag = "0.1.5",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope-fzf-native.nvim",
+      build = "make",
+      enabled = vim.fn.executable("make") == 1,
+      config = function()
+        require("telescope").load_extension("fzf")
+      end,
+    },
     config = function()
       local builtin = require("telescope.builtin")
       local wk = require("which-key")
@@ -26,6 +34,7 @@ return {
       }, { prefix = "<leader>" })
     end
   },
+  { "mbbill/undotree" },
   {
     "theprimeagen/harpoon",
     event = "VeryLazy",

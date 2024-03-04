@@ -13,7 +13,6 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   spec = {
-    { "Eandrju/cellular-automaton.nvim" },
     { import = "C410l.plugins" },
   },
   defaults = {

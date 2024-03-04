@@ -36,5 +36,6 @@ opt.signcolumn = "yes"
 opt.conceallevel = 2
 opt.confirm = true
 opt.cursorline = true
+opt.updatetime = 50
 
 opt.colorcolumn = "80"

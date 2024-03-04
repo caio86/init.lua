@@ -11,6 +11,7 @@ return {
 
   {
     "VonHeikemen/lsp-zero.nvim", branch = "v3.x",
+    event = "VeryLazy",
     config = function()
       local lsp_zero = require('lsp-zero')
 

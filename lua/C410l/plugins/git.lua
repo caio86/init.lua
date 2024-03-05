@@ -17,7 +17,7 @@ return {
       "LazyGitFilterCurrentFile",
     },
     keys = {
-      { "<leader>gg", "<cmd>LazyGit<cr>", desc = "Lazygit" },
+      { "<leader>gg", "<cmd>LazyGitCurrentFile<cr>", desc = "Lazygit" },
     },
     -- optional for floating window border decoration
     dependencies = {

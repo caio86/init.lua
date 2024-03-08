@@ -9,7 +9,7 @@ return {
       vim.o.timeoutlen = 200
     end,
 		opts = function()
-      return require("C410l.plugins.configs.which_key")
+      return require("C410l.plugins.configs.others").which_key
     end,
 		config = function(_, opts)
 			local wk = require("which-key")

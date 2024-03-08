@@ -3,8 +3,9 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
     event = "VeryLazy",
+    cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo", },
+    build = ":TSUpdate",
     opts = function()
       return require("C410l.plugins.configs.treesitter")
     end,

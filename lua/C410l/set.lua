@@ -21,6 +21,8 @@ opt.expandtab = true
 
 opt.smartindent = true
 
+opt.wrap = false
+
 -- make undo file
 opt.swapfile = false
 opt.backup = false

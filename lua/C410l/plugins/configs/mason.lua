@@ -10,6 +10,9 @@ local options = {
     "pyright",
   },
 
+  -- auto-install configured servers (with lspconfig)
+  automatic_installation = true;
+
   handlers = {
     function(server_name) -- default handler
       require("lspconfig")[server_name].setup({

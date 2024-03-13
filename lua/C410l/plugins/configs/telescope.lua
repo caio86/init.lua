@@ -2,6 +2,7 @@
 local M = {}
 
 local builtin = require("telescope.builtin")
+local actions = require("telescope.actions")
 
 -- We cache the results of "git rev-parse"
 -- Process creation is expensive in Windows, so this reduces latency
@@ -53,7 +54,12 @@ M.options = {
     -- Developer configurations: Not meant for general override
     buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
     mappings = {
-      n = { ["q"] = require("telescope.actions").close },
+      n = { ["q"] = actions.close },
+      i = {
+        ["<C-k>"] = actions.move_selection_previous,
+        ["<C-j>"] = actions.move_selection_next,
+        ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+      },
     },
   },
 

@@ -23,7 +23,7 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
-    event = "VeryLazy",
+    event = { "BufReadPre", "BufNewFile" },
     keys = {
       { "<leader>cl", "<cmd>LspInfo<CR>", desc = "LSP Info" }
     },

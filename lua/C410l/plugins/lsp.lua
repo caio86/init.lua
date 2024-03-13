@@ -24,11 +24,14 @@ return {
   {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp",
+    },
     keys = {
       { "<leader>cl", "<cmd>LspInfo<CR>", desc = "LSP Info" }
     },
     config = function()
-      require("C410l.plugins.configs.base_lsp")
+      require("C410l.plugins.configs.lspconfig")
     end
   },
   {
@@ -50,8 +53,8 @@ return {
         "saadparwaiz1/cmp_luasnip",
         "hrsh7th/cmp-nvim-lua",
         "hrsh7th/cmp-nvim-lsp",
-        "hrsh7th/cmp-buffer",
-        "hrsh7th/cmp-path",
+        "hrsh7th/cmp-buffer", -- source for text in buffer
+        "hrsh7th/cmp-path", -- source for file system paths
       },
     },
     opts = function()

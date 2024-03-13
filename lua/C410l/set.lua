@@ -12,6 +12,7 @@ local opt = vim.opt
 -- line numbers
 opt.nu = true
 opt.relativenumber = true
+opt.numberwidth = 2
 
 -- set identation
 opt.tabstop = 2
@@ -39,5 +40,7 @@ opt.conceallevel = 2
 opt.confirm = true
 opt.cursorline = true
 opt.updatetime = 50
+opt.splitbelow = true
+opt.splitright = true
 
 opt.colorcolumn = "80"

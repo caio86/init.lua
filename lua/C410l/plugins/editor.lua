@@ -29,6 +29,7 @@ return {
           b = { builtin.buffers, "Find Buffer" },
           g = { builtin.live_grep, "Find with Grep" },
           h = { builtin.help_tags, "Find Help" },
+          w = { builtin.grep_string, "Find Word"},
         },
         s = {
         },

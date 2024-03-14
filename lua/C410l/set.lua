@@ -22,6 +22,7 @@ opt.expandtab = true
 
 opt.smartindent = true
 
+-- disable wrap
 opt.wrap = false
 
 -- make undo file
@@ -33,6 +34,10 @@ opt.undofile = true
 -- enable true colors
 opt.termguicolors = true
 
+-- redefine splitting priority
+opt.splitbelow = true
+opt.splitright = true
+
 -- misc
 opt.scrolloff = 8
 opt.signcolumn = "yes"
@@ -40,7 +45,6 @@ opt.conceallevel = 2
 opt.confirm = true
 opt.cursorline = true
 opt.updatetime = 50
-opt.splitbelow = true
-opt.splitright = true
+opt.pumheight = 14
 
 opt.colorcolumn = "80"

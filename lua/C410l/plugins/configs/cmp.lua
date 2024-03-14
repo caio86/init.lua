@@ -3,7 +3,7 @@ local cmp = require "cmp"
 local cmp_ui = {
   icons = true,
   lspkind_text = true,
-  style = "atom", -- default/flat_light/flat_dark/atom/atom_colored
+  style = "default", -- default/flat_light/flat_dark/atom/atom_colored
   border_color = "grey_fg", -- only applicable for "default" style, use color names from base30 variables
   selected_item_bg = "simple", -- colored / simple
 }
@@ -18,49 +18,32 @@ local formatting_style = {
   -- default fields order i.e completion word + item.kind + item.kind icons
   fields = field_arrangement[cmp_style] or { "abbr", "kind", "menu" },
 
-  format = require("lspkind").cmp_format({ with_text = true, maxheight = 20, maxwidth = 50, menu = {
-    buffer = "[Buffer]",
-    nvim_lsp = "[LSP]",
-    path = "[Path]",
+  format = require("lspkind").cmp_format({ with_text = true, mode = "symbol_text", menu = {
     luasnip = "[LuaSnip]",
+    nvim_lsp = "[LSP]",
+    buffer = "[Buffer]",
+    path = "[Path]",
     nvim_lua = "[Lua]",
   }}),
 }
 
-local function border(hl_name)
-  return {
-    { "╭", hl_name },
-    { "─", hl_name },
-    { "╮", hl_name },
-    { "│", hl_name },
-    { "╯", hl_name },
-    { "─", hl_name },
-    { "╰", hl_name },
-    { "│", hl_name },
-  }
-end
-
 local options = {
-  -- window = {
-  --   completion = {
-  --     side_padding = (cmp_style ~= "atom" and cmp_style ~= "atom_colored") and 1 or 0,
-  --     winhighlight = "Normal:CmpPmenu,CursorLine:CmpSel,Search:None",
-  --     scrollbar = true,
-  --   },
-  --   documentation = {
-  --     border = border "CmpDocBorder",
-  --     winhighlight = "Normal:CmpDoc",
-  --   },
-  -- },
+  completion = {
+    completeopt = "menu,menuone,preview,noselect",
+  },
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
+  },
   snippet = {
     expand = function(args)
       require("luasnip").lsp_expand(args.body)
     end,
   },
-  -- experimental = {
-  --   native_menu = false,
-  --   ghost_text = false,
-  -- },
+  experimental = {
+    native_menu = false,
+    ghost_text = false,
+  },
 
   formatting = formatting_style,
 
@@ -76,18 +59,36 @@ local options = {
       select = true,
     },
   },
-  sources = {
+  sources = cmp.config.sources({
     { name = "nvim_lsp" },
     { name = "luasnip" },
     { name = "buffer" },
     { name = "nvim_lua" },
     { name = "path" },
     { name = "crates" },
-  },
+  }),
 }
 
-if cmp_style ~= "atom" and cmp_style ~= "atom_colored" then
-  options.window.completion.border = border "CmpBorder"
-end
+-- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline({ '/', '?' }, {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = 'buffer' }
+  }
+})
+
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  })
+})
+
+-- if cmp_style ~= "atom" and cmp_style ~= "atom_colored" then
+--   options.window.completion.border = border "CmpBorder"
+-- end
 
 return options

@@ -44,23 +44,24 @@ M.on_attach = function(client, bufnr)
 end
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
+M.capabilities = vim.tbl_deep_extend('force', M.capabilities, require('cmp_nvim_lsp').default_capabilities())
 
-M.capabilities.textDocument.completion.completionItem = {
-  documentationFormat = { "markdown", "plaintext" },
-  snippetSupport = true,
-  preselectSupport = true,
-  insertReplaceSupport = true,
-  labelDetailsSupport = true,
-  deprecatedSupport = true,
-  commitCharactersSupport = true,
-  tagSupport = { valueSet = { 1 } },
-  resolveSupport = {
-    properties = {
-      "documentation",
-      "detail",
-      "additionalTextEdits",
-    },
-  },
-}
+-- M.capabilities.textDocument.completion.completionItem = {
+--   documentationFormat = { "markdown", "plaintext" },
+--   snippetSupport = true,
+--   preselectSupport = true,
+--   insertReplaceSupport = true,
+--   labelDetailsSupport = true,
+--   deprecatedSupport = true,
+--   commitCharactersSupport = true,
+--   tagSupport = { valueSet = { 1 } },
+--   resolveSupport = {
+--     properties = {
+--       "documentation",
+--       "detail",
+--       "additionalTextEdits",
+--     },
+--   },
+-- }
 
 return M

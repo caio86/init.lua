@@ -25,6 +25,9 @@ map("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>", { desc = "Make
 -- new file
 map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
 
+-- formatting
+map("n", "<leader>cf", vim.lsp.buf.format, { desc = "Format" })
+
 -- lazy
 map("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
 

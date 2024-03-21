@@ -3,6 +3,7 @@
 return {
   {
     "nvim-telescope/telescope.nvim",
+    event = "VimEnter",
     tag = "0.1.5",
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -23,21 +24,18 @@ return {
       telescope.setup(opts.options)
 
       wk.register({
-        ["<space>"] = {opts.project_files, "Find File"},
+        ["<space>"] = { opts.project_files, "Find File" },
         f = {
           f = { builtin.find_files, "Find File" },
           b = { builtin.buffers, "Find Buffer" },
           g = { builtin.live_grep, "Find with Grep" },
           h = { builtin.help_tags, "Find Help" },
-          w = { builtin.grep_string, "Find Word"},
+          w = { builtin.grep_string, "Find Word" },
         },
-        s = {
-        },
-        g = {
-
-        },
+        s = {},
+        g = {},
       }, { prefix = "<leader>" })
-    end
+    end,
   },
   { "mbbill/undotree" },
   {
@@ -49,22 +47,31 @@ return {
       local wk = require("which-key")
 
       wk.register({
-        ["<leader>a"] = { mark.add_file, "Harpoon Add File"},
-        ["<C-e>"] = { ui.toggle_quick_menu, "Harpoon Toggle Quick Menu"},
+        ["<leader>a"] = { mark.add_file, "Harpoon Add File" },
+        ["<C-e>"] = { ui.toggle_quick_menu, "Harpoon Toggle Quick Menu" },
 
-        ["<leader>1"] = { function()
-          ui.nav_file(1)
-        end, "Harpoon File 1"},
+        ["<leader>1"] = {
+          function()
+            ui.nav_file(1)
+          end,
+          "Harpoon File 1",
+        },
 
-        ["<leader>2"] = { function()
-          ui.nav_file(2)
-        end, "Harpoon File 2"},
+        ["<leader>2"] = {
+          function()
+            ui.nav_file(2)
+          end,
+          "Harpoon File 2",
+        },
 
-        ["<leader>3"] = { function()
-          ui.nav_file(3)
-        end, "Harpoon File 3"},
+        ["<leader>3"] = {
+          function()
+            ui.nav_file(3)
+          end,
+          "Harpoon File 3",
+        },
       })
-    end
+    end,
   },
   {
     "folke/flash.nvim",
@@ -86,8 +93,8 @@ return {
     opts = function()
       return require("C410l.plugins.configs.others").gitsigns
     end,
-    config = function (_, opts)
+    config = function(_, opts)
       require("gitsigns").setup(opts)
-    end
-  }
+    end,
+  },
 }

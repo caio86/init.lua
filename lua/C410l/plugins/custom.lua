@@ -19,6 +19,14 @@ local plugins = {
       { "<C-k>", "<cmd>TmuxNavigateUp<CR>", desc = { "Window up" } },
     },
   },
+
+  {
+    "folke/todo-comments.nvim",
+    event = "VimEnter",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = { signs = false },
+  },
+
 }
 
 return plugins

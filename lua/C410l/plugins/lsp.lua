@@ -3,7 +3,7 @@ return {
     "williamboman/mason.nvim",
     cmd = { "Mason", "MasonInstall", "MasonInstallAll", "MasonUpdate" },
     keys = {
-      { "<leader>cm", "<cmd>Mason<CR>", desc = "Mason" }
+      { "<leader>cm", "<cmd>Mason<CR>", desc = "Mason" },
     },
     opts = {
       ui = {
@@ -26,13 +26,20 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
+      -- Useful status updates for LSP.
+      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
+      { "j-hui/fidget.nvim", opts = {} },
+
+      -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
+      -- used for completion, annotations and signatures of Neovim apis
+      { "folke/neodev.nvim", opts = {} },
     },
     keys = {
-      { "<leader>cl", "<cmd>LspInfo<CR>", desc = "LSP Info" }
+      { "<leader>cl", "<cmd>LspInfo<CR>", desc = "LSP Info" },
     },
     config = function()
       require("C410l.plugins.configs.lspconfig")
-    end
+    end,
   },
   {
     "hrsh7th/nvim-cmp",
@@ -41,11 +48,21 @@ return {
       {
         -- snippet plugin
         "L3MON4D3/LuaSnip",
+        build = (function()
+          -- Build Step is needed for regex support in snippets.
+          -- This step is not supported in many windows environments.
+          -- Remove the below condition to re-enable on windows.
+          if vim.fn.has("win32") == 1 or vim.fn.executable("make") == 0 then
+            return
+          end
+          return "make install_jsregexp"
+        end)(),
+
         dependencies = "rafamadriz/friendly-snippets",
         opts = { history = true, updateevents = "TextChanged, TextChangedI" },
         config = function(_, opts)
           require("C410l.plugins.configs.others").luasnip(opts)
-        end
+        end,
       },
 
       -- cmp sources plugins
@@ -63,6 +80,6 @@ return {
     end,
     config = function(_, opts)
       require("cmp").setup(opts)
-    end
+    end,
   },
 }

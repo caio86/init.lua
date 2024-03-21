@@ -1,4 +1,5 @@
-local cmp = require "cmp"
+local cmp = require("cmp")
+local luasnip = require("luasnip")
 
 local cmp_ui = {
   icons = true,
@@ -18,13 +19,17 @@ local formatting_style = {
   -- default fields order i.e completion word + item.kind + item.kind icons
   fields = field_arrangement[cmp_style] or { "abbr", "kind", "menu" },
 
-  format = require("lspkind").cmp_format({ with_text = true, mode = "symbol_text", menu = {
-    luasnip = "[LuaSnip]",
-    nvim_lsp = "[LSP]",
-    buffer = "[Buffer]",
-    path = "[Path]",
-    nvim_lua = "[Lua]",
-  }}),
+  format = require("lspkind").cmp_format({
+    with_text = true,
+    mode = "symbol_text",
+    menu = {
+      luasnip = "[LuaSnip]",
+      nvim_lsp = "[LSP]",
+      buffer = "[Buffer]",
+      path = "[Path]",
+      nvim_lua = "[Lua]",
+    },
+  }),
 }
 
 local options = {
@@ -47,18 +52,46 @@ local options = {
 
   formatting = formatting_style,
 
-  mapping = {
-    ["<C-p>"] = cmp.mapping.select_prev_item(),
+  mapping = cmp.mapping.preset.insert({
+    -- Select the [n]ext item
     ["<C-n>"] = cmp.mapping.select_next_item(),
-    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+    -- Select the [p]revious item
+    ["<C-p>"] = cmp.mapping.select_prev_item(),
+
+    -- Scroll the documentation window [b]ack / [f]orward
+    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
-    ["<C-Space>"] = cmp.mapping.complete(),
-    ["<C-e>"] = cmp.mapping.close(),
-    ["<CR>"] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Insert,
-      select = true,
-    },
-  },
+
+    -- Accept ([y]es) the completion.
+    --  This will auto-import if your LSP supports it.
+    --  This will expand snippets if the LSP sent a snippet.
+    ["<C-y>"] = cmp.mapping.confirm({ select = true }),
+
+    -- Manually trigger a completion from nvim-cmp.
+    --  Generally you don't need this, because nvim-cmp will display
+    --  completions whenever it has completion options available.
+    ["<C-Space>"] = cmp.mapping.complete({}),
+
+    -- Think of <c-l> as moving to the right of your snippet expansion.
+    --  So if you have a snippet that's like:
+    --  function $name($args)
+    --    $body
+    --  end
+    --
+    -- <c-l> will move you to the right of each of the expansion locations.
+    -- <c-h> is similar, except moving you backwards.
+    ["<C-l>"] = cmp.mapping(function()
+      if luasnip.expand_or_locally_jumpable() then
+        luasnip.expand_or_jump()
+      end
+    end, { "i", "s" }),
+    ["<C-h>"] = cmp.mapping(function()
+      if luasnip.locally_jumpable(-1) then
+        luasnip.jump(-1)
+      end
+    end, { "i", "s" }),
+  }),
+
   sources = cmp.config.sources({
     { name = "nvim_lsp" },
     { name = "luasnip" },
@@ -70,22 +103,22 @@ local options = {
 }
 
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline({ '/', '?' }, {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = {
-    { name = 'buffer' }
-  }
-})
+-- cmp.setup.cmdline({ '/', '?' }, {
+--   mapping = cmp.mapping.preset.cmdline(),
+--   sources = {
+--     { name = 'buffer' }
+--   }
+-- })
 
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline(':', {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = cmp.config.sources({
-    { name = 'path' }
-  }, {
-    { name = 'cmdline' }
-  })
-})
+-- cmp.setup.cmdline(':', {
+--   mapping = cmp.mapping.preset.cmdline(),
+--   sources = cmp.config.sources({
+--     { name = 'path' }
+--   }, {
+--     { name = 'cmdline' }
+--   })
+-- })
 
 -- if cmp_style ~= "atom" and cmp_style ~= "atom_colored" then
 --   options.window.completion.border = border "CmpBorder"

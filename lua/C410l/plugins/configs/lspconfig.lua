@@ -12,11 +12,17 @@ M.on_attach = function(client, bufnr)
     vim.keymap.set(mode, lhs, rhs, options)
   end
 
-  map("n", "gd", function() require("telescope.builtin").lsp_definitions({ reuse_win = true }) end, { desc = "Goto Definition" })
+  map("n", "gd", function()
+    require("telescope.builtin").lsp_definitions({ reuse_win = true })
+  end, { desc = "Goto Definition" })
   map("n", "gr", "<cmd>Telescope lsp_references<cr>", { desc = "Goto References" })
   map("n", "gD", vim.lsp.buf.declaration, { desc = "Goto Declaration" })
-  map("n", "gI", function() require("telescope.builtin").lsp_implementations({ reuse_win = true }) end, { desc = "Goto Implementation" })
-  map("n", "gy", function() require("telescope.builtin").lsp_type_definitions({ reuse_win = true }) end, { desc = "Goto T[y]pe Definition" })
+  map("n", "gI", function()
+    require("telescope.builtin").lsp_implementations({ reuse_win = true })
+  end, { desc = "Goto Implementation" })
+  map("n", "gy", function()
+    require("telescope.builtin").lsp_type_definitions({ reuse_win = true })
+  end, { desc = "Goto T[y]pe Definition" })
   map("n", "K", vim.lsp.buf.hover, { desc = "Hover" })
   map("n", "gK", vim.lsp.buf.signature_help, { desc = "Signature Help" })
   map("i", "<C-k>", vim.lsp.buf.signature_help, { desc = "Signature Help" })
@@ -26,25 +32,20 @@ M.on_attach = function(client, bufnr)
   map({ "n", "v" }, "<leader>cc", vim.lsp.codelens.run, { desc = "Run Codelens" })
   map("n", "<leader>cC", vim.lsp.codelens.refresh, { desc = "Refresh & Display Codelens" })
   map("n", "<leader>cr", vim.lsp.buf.rename, { desc = "Rename" })
-  map(
-    "n",
-    "<leader>cA",
-    function()
-      vim.lsp.buf.code_action({
-        context = {
-          only = {
-            "source",
-          },
-          diagnostics = {},
+  map("n", "<leader>cA", function()
+    vim.lsp.buf.code_action({
+      context = {
+        only = {
+          "source",
         },
-      })
-    end,
-    { desc = "Source Action" }
-  )
+        diagnostics = {},
+      },
+    })
+  end, { desc = "Source Action" })
 end
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
-M.capabilities = vim.tbl_deep_extend('force', M.capabilities, require('cmp_nvim_lsp').default_capabilities())
+M.capabilities = vim.tbl_deep_extend("force", M.capabilities, require("cmp_nvim_lsp").default_capabilities())
 
 -- M.capabilities.textDocument.completion.completionItem = {
 --   documentationFormat = { "markdown", "plaintext" },

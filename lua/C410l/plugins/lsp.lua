@@ -1,33 +1,71 @@
 return {
-  {
-    "williamboman/mason.nvim",
-    cmd = { "Mason", "MasonInstall", "MasonInstallAll", "MasonUpdate" },
-    keys = {
-      { "<leader>cm", "<cmd>Mason<CR>", desc = "Mason" },
-    },
-    opts = {
-      ui = {
-        icons = {
-          package_pending = " ",
-          package_installed = "󰄳 ",
-          package_uninstalled = " 󰚌",
-        },
-      },
-    },
-  },
-  {
-    "williamboman/mason-lspconfig.nvim",
-    opts = function()
-      return require("C410l.plugins.configs.mason")
-    end,
-  },
+  -- {
+  --   "williamboman/mason.nvim",
+  --   cmd = { "Mason", "MasonInstall", "MasonInstallAll", "MasonUpdate" },
+  --   keys = {
+  --     { "<leader>cm", "<cmd>Mason<CR>", desc = "Mason" },
+  --   },
+  --   opts = {
+  --     ui = {
+  --       icons = {
+  --         package_pending = " ",
+  --         package_installed = "󰄳 ",
+  --         package_uninstalled = " 󰚌",
+  --       },
+  --     },
+  --   },
+  -- },
+  -- {
+  --   "williamboman/mason-lspconfig.nvim",
+  --   opts = function()
+  --     return require("C410l.plugins.configs.mason")
+  --   end,
+  -- },
+  -- {
+  --   "neovim/nvim-lspconfig",
+  --   event = { "BufReadPre", "BufNewFile" },
+  --   dependencies = {
+  --     "hrsh7th/cmp-nvim-lsp",
+  --     -- Useful status updates for LSP.
+  --     -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
+  --     { "j-hui/fidget.nvim", opts = {} },
+  --
+  --     -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
+  --     -- used for completion, annotations and signatures of Neovim apis
+  --     { "folke/neodev.nvim", opts = {} },
+  --   },
+  --   keys = {
+  --     { "<leader>cl", "<cmd>LspInfo<CR>", desc = "LSP Info" },
+  --   },
+  --   config = function()
+  --     require("C410l.plugins.configs.lspconfig")
+  --   end,
+  -- },
   {
     "neovim/nvim-lspconfig",
-    event = { "BufReadPre", "BufNewFile" },
+    event = "VimEnter",
     dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
+      -- Automatically install LSPs and related tools to stdpath for Neovim
+      {
+        "williamboman/mason.nvim",
+        cmd = { "Mason", "MasonInstall", "MasonInstallAll", "MasonUpdate" },
+        keys = {
+          { "<leader>cm", "<cmd>Mason<CR>", desc = "Mason" },
+        },
+        opts = {
+          ui = {
+            icons = {
+              package_pending = " ",
+              package_installed = "󰄳 ",
+              package_uninstalled = " 󰚌",
+            },
+          },
+        },
+      },
+      "williamboman/mason-lspconfig.nvim",
+      "WhoIsSethDaniel/mason-tool-installer.nvim",
+
       -- Useful status updates for LSP.
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
       { "j-hui/fidget.nvim", opts = {} },
 
       -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
@@ -38,7 +76,7 @@ return {
       { "<leader>cl", "<cmd>LspInfo<CR>", desc = "LSP Info" },
     },
     config = function()
-      require("C410l.plugins.configs.lspconfig")
+      require("C410l.plugins.configs.lsp-config")
     end,
   },
   {

@@ -43,7 +43,7 @@ return {
   -- },
   {
     "neovim/nvim-lspconfig",
-    event = "VimEnter",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       -- Automatically install LSPs and related tools to stdpath for Neovim
       {

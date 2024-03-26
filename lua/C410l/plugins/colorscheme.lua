@@ -4,10 +4,6 @@ return {
     lazy = false,
     priority = 1000,
     name = "catppuccin",
-    config = function()
-      -- load the colorscheme
-      vim.cmd([[colorscheme catppuccin]])
-    end,
     opts = {
       transparent_background = true,
       integrations = {
@@ -39,6 +35,11 @@ return {
         treesitter = true,
         which_key = true,
       },
-    }
-  }
+    },
+    config = function(_, opts)
+      require("catppuccin").setup(opts)
+      -- load the colorscheme
+      vim.cmd([[colorscheme catppuccin]])
+    end,
+  },
 }

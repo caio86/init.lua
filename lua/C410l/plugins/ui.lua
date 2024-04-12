@@ -1,118 +1,118 @@
 -- plugins that add or modify the ui
 
 return {
-	{
-		"folke/which-key.nvim",
-		event = "VeryLazy",
-    init = function ()
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    init = function()
       vim.o.timeout = true
       vim.o.timeoutlen = 200
     end,
-		opts = function()
+    opts = function()
       return require("C410l.plugins.configs.others").which_key
     end,
-		config = function(_, opts)
-			local wk = require("which-key")
-			wk.setup(opts)
-			wk.register(opts.defaults)
-		end,
-	},
-	{
-		"RRethy/vim-illuminate",
-		event = "VeryLazy",
-		opts = {
-			delay = 200,
-			large_file_cutoff = 2000,
-			large_file_overrides = {
-				providers = { "lsp" },
-			},
-		},
-		config = function(_, opts)
-			require("illuminate").configure(opts)
-
-			local function map(key, dir, buffer)
-				vim.keymap.set("n", key, function()
-					require("illuminate")["goto_" .. dir .. "_reference"](false)
-				end, { desc = dir:sub(1, 1):upper() .. dir:sub(2) .. " Reference", buffer = buffer })
-			end
-
-			map("]]", "next")
-			map("[[", "prev")
-
-			-- also set it after loading ftplugins, since a lot overwrite [[ and ]]
-			vim.api.nvim_create_autocmd("FileType", {
-				callback = function()
-					local buffer = vim.api.nvim_get_current_buf()
-					map("]]", "next", buffer)
-					map("[[", "prev", buffer)
-				end,
-			})
-		end,
-		keys = {
-			{ "]]", desc = "Next Reference" },
-			{ "[[", desc = "Prev Reference" },
-		},
-	},
-	{ -- diagnostics ui
-		"folke/trouble.nvim",
-		cmd = { "TroubleToggle", "Trouble" },
-		opts = { use_diagnostic_signs = true },
-		keys = {
-			{ "<leader>xx", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document Diagnostics (Trouble)" },
-			{ "<leader>xX", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics (Trouble)" },
-			{ "<leader>xL", "<cmd>TroubleToggle loclist<cr>", desc = "Location List (Trouble)" },
-			{ "<leader>xQ", "<cmd>TroubleToggle quickfix<cr>", desc = "Quickfix List (Trouble)" },
-			{
-				"[q",
-				function()
-					if require("trouble").is_open() then
-						require("trouble").previous({ skip_groups = true, jump = true })
-					else
-						local ok, err = pcall(vim.cmd.cprev)
-						if not ok then
-							vim.notify(err, vim.log.levels.ERROR)
-						end
-					end
-				end,
-				desc = "Previous trouble/quickfix item",
-			},
-			{
-				"]q",
-				function()
-					if require("trouble").is_open() then
-						require("trouble").next({ skip_groups = true, jump = true })
-					else
-						local ok, err = pcall(vim.cmd.cnext)
-						if not ok then
-							vim.notify(err, vim.log.levels.ERROR)
-						end
-					end
-				end,
-				desc = "Next trouble/quickfix item",
-			},
-		},
-	},
-	{ -- color highlighter
-		"NvChad/nvim-colorizer.lua",
+    config = function(_, opts)
+      local wk = require("which-key")
+      wk.setup(opts)
+      wk.register(opts.defaults)
+    end,
+  },
+  {
+    "RRethy/vim-illuminate",
     event = "VeryLazy",
-		config = function()
-			require("colorizer").setup({
-				user_default_options = {
-					-- mode = "background",
-					mode = "virtualtext",
-				},
-			})
+    opts = {
+      delay = 200,
+      large_file_cutoff = 2000,
+      large_file_overrides = {
+        providers = { "lsp" },
+      },
+    },
+    config = function(_, opts)
+      require("illuminate").configure(opts)
+
+      local function map(key, dir, buffer)
+        vim.keymap.set("n", key, function()
+          require("illuminate")["goto_" .. dir .. "_reference"](false)
+        end, { desc = dir:sub(1, 1):upper() .. dir:sub(2) .. " Reference", buffer = buffer })
+      end
+
+      map("]]", "next")
+      map("[[", "prev")
+
+      -- also set it after loading ftplugins, since a lot overwrite [[ and ]]
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function()
+          local buffer = vim.api.nvim_get_current_buf()
+          map("]]", "next", buffer)
+          map("[[", "prev", buffer)
+        end,
+      })
+    end,
+    keys = {
+      { "]]", desc = "Next Reference" },
+      { "[[", desc = "Prev Reference" },
+    },
+  },
+  { -- diagnostics ui
+    "folke/trouble.nvim",
+    cmd = { "TroubleToggle", "Trouble" },
+    opts = { use_diagnostic_signs = true },
+    keys = {
+      { "<leader>xx", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document Diagnostics (Trouble)" },
+      { "<leader>xX", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics (Trouble)" },
+      { "<leader>xL", "<cmd>TroubleToggle loclist<cr>", desc = "Location List (Trouble)" },
+      { "<leader>xQ", "<cmd>TroubleToggle quickfix<cr>", desc = "Quickfix List (Trouble)" },
+      {
+        "[q",
+        function()
+          if require("trouble").is_open() then
+            require("trouble").previous({ skip_groups = true, jump = true })
+          else
+            local ok, err = pcall(vim.cmd.cprev)
+            if not ok then
+              vim.notify(err, vim.log.levels.ERROR)
+            end
+          end
+        end,
+        desc = "Previous trouble/quickfix item",
+      },
+      {
+        "]q",
+        function()
+          if require("trouble").is_open() then
+            require("trouble").next({ skip_groups = true, jump = true })
+          else
+            local ok, err = pcall(vim.cmd.cnext)
+            if not ok then
+              vim.notify(err, vim.log.levels.ERROR)
+            end
+          end
+        end,
+        desc = "Next trouble/quickfix item",
+      },
+    },
+  },
+  { -- color highlighter
+    "NvChad/nvim-colorizer.lua",
+    event = "VeryLazy",
+    config = function()
+      require("colorizer").setup({
+        user_default_options = {
+          -- mode = "background",
+          mode = "virtualtext",
+        },
+      })
 
       -- execute colorizer as soon as possible
       vim.defer_fn(function()
         require("colorizer").attach_to_buffer(0)
       end, 0)
-		end,
-	},
+    end,
+  },
   {
-    'nvim-lualine/lualine.nvim',
+    "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     init = function()
       vim.g.lualine_laststatus = vim.o.laststatus
       if vim.fn.argc(-1) > 0 then
@@ -129,13 +129,13 @@ return {
         command_separators = "|",
         globalstatus = true,
         disabled_filetypes = { statusline = { "dashboard", "alpha", "starter" } },
-      }
+      },
     },
   },
-	{
-		"nvimdev/dashboard-nvim",
-		event = "VimEnter",
-		opts = function()
+  {
+    "nvimdev/dashboard-nvim",
+    event = "VimEnter",
+    opts = function()
       local logo = [[
    ██████╗██╗  ██╗ ██╗ ██████╗ ██╗     
   ██╔════╝██║  ██║███║██╔═████╗██║     
@@ -144,17 +144,17 @@ return {
   ╚██████╗     ██║ ██║╚██████╔╝███████╗
    ╚═════╝     ╚═╝ ╚═╝ ╚═════╝ ╚══════╝
       ]]
-			logo = string.rep("\n", 8) .. logo .. "\n\n"
+      logo = string.rep("\n", 8) .. logo .. "\n\n"
 
-			local opts = {
-				theme = "doom",
-				hide = {
-					-- this is taken care of by lualine
-					-- enabling this messes up the actual laststatus setting after loading a file
-					statusline = false,
-				},
-				config = {
-					header = vim.split(logo, "\n"),
+      local opts = {
+        theme = "doom",
+        hide = {
+          -- this is taken care of by lualine
+          -- enabling this messes up the actual laststatus setting after loading a file
+          statusline = false,
+        },
+        config = {
+          header = vim.split(logo, "\n"),
           -- stylua: ignore
           center = {
             { action = "Telescope find_files",                                     desc = " Find file",       icon = " ", key = "f" },
@@ -166,35 +166,35 @@ return {
             { action = "Lazy",                                                     desc = " Lazy",            icon = "󰒲 ", key = "l" },
             { action = "qa",                                                       desc = " Quit",            icon = " ", key = "q" },
           },
-					footer = function()
-						local stats = require("lazy").stats()
-						local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-						return {
-							"⚡ Neovim loaded " .. stats.loaded .. "/" .. stats.count .. " plugins in " .. ms .. "ms",
-						}
-					end,
-				},
-			}
+          footer = function()
+            local stats = require("lazy").stats()
+            local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
+            return {
+              "⚡ Neovim loaded " .. stats.loaded .. "/" .. stats.count .. " plugins in " .. ms .. "ms",
+            }
+          end,
+        },
+      }
 
-			for _, button in ipairs(opts.config.center) do
-				button.desc = button.desc .. string.rep(" ", 43 - #button.desc)
-				button.key_format = "  %s"
-			end
+      for _, button in ipairs(opts.config.center) do
+        button.desc = button.desc .. string.rep(" ", 43 - #button.desc)
+        button.key_format = "  %s"
+      end
 
-			-- close Lazy and re-open when the dashboard is ready
-			if vim.o.filetype == "lazy" then
-				vim.cmd.close()
-				vim.api.nvim_create_autocmd("User", {
-					pattern = "DashboardLoaded",
-					callback = function()
-						require("lazy").show()
-					end,
-				})
-			end
+      -- close Lazy and re-open when the dashboard is ready
+      if vim.o.filetype == "lazy" then
+        vim.cmd.close()
+        vim.api.nvim_create_autocmd("User", {
+          pattern = "DashboardLoaded",
+          callback = function()
+            require("lazy").show()
+          end,
+        })
+      end
 
-			return opts
-		end,
-	},
+      return opts
+    end,
+  },
   {
     "echasnovski/mini.indentscope",
     version = false, -- wait till new 0.7.0 release to put it back on semver
@@ -269,37 +269,37 @@ return {
     end,
   },
   {
-  "rcarriga/nvim-notify",
-  lazy = true,
-  keys = {
-    {
-      "<leader>un",
-      function()
-        require("notify").dismiss({ silent = true, pending = true })
+    "rcarriga/nvim-notify",
+    lazy = true,
+    keys = {
+      {
+        "<leader>un",
+        function()
+          require("notify").dismiss({ silent = true, pending = true })
+        end,
+        desc = "Dismiss all Notifications",
+      },
+    },
+    opts = {
+      timeout = 3000,
+      max_height = function()
+        return math.floor(vim.o.lines * 0.75)
       end,
-      desc = "Dismiss all Notifications",
+      max_width = function()
+        return math.floor(vim.o.columns * 0.75)
+      end,
+      on_open = function(win)
+        vim.api.nvim_win_set_config(win, { zindex = 100 })
+      end,
     },
   },
-  opts = {
-    timeout = 3000,
-    max_height = function()
-      return math.floor(vim.o.lines * 0.75)
-    end,
-    max_width = function()
-      return math.floor(vim.o.columns * 0.75)
-    end,
-    on_open = function(win)
-      vim.api.nvim_win_set_config(win, { zindex = 100 })
-    end,
-  },
-},
   {
     "folke/noice.nvim",
     event = "VeryLazy",
     dependencies = {
       {
         "MunifTanjim/nui.nvim",
-        lazy = true
+        lazy = true,
       },
     },
     opts = {

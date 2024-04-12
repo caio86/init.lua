@@ -11,7 +11,7 @@ local options = {
   },
 
   -- auto-install configured servers (with lspconfig)
-  automatic_installation = true;
+  automatic_installation = true,
 
   handlers = {
     function(server_name) -- default handler

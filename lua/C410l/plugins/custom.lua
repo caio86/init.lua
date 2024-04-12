@@ -73,6 +73,13 @@ local plugins = {
         end,
         desc = "Toggle auto formatting",
       },
+      {
+        "<leader>cf",
+        function()
+          require("conform").format({ async = true, lsp_fallback = true })
+        end,
+        desc = "Code Format",
+      },
     },
   },
 }

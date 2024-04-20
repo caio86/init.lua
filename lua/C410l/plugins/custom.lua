@@ -82,6 +82,10 @@ local plugins = {
       },
     },
   },
+  {
+    "towolf/vim-helm",
+    ft = "helm",
+  },
 }
 
 return plugins

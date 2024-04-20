@@ -49,6 +49,7 @@ local plugins = {
       end,
       formatters_by_ft = {
         lua = { "stylua" },
+        go = { "goimports", "gofmt" },
         nix = { "nixpkgs_fmt" },
         sh = { "shfmt" },
         -- Conform can also run multiple formatters sequentially

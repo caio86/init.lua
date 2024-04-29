@@ -25,6 +25,12 @@ if vim.fn.exists(":Oil") == 0 then
 end
 map("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>", { desc = "Make it Rain" })
 
+-- print without adding deleted selection to clip
+map("x", "<leader>p", [["_dP]])
+
+-- yarn to system clipboard
+map({ "n", "v" }, "<leader>y", [["+y]], { desc = "Yarn to sys clip" })
+
 -- new file
 map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
 

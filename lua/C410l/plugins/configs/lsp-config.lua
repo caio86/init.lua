@@ -51,5 +51,8 @@ require("mason-lspconfig").setup({
       server.on_attach = on_attach
       require("lspconfig")[server_name].setup(server)
     end,
+    jdtls = function()
+      return true
+    end,
   },
 })

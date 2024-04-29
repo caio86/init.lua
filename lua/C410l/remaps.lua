@@ -19,7 +19,10 @@ map("n", "<C-f>", function()
 end, { desc = "Tmux sessionizer" })
 
 -- keymaps
-map("n", "<leader>e", vim.cmd.Ex, { desc = "File Explorer" })
+-- If oil is not installed, use Netrw
+if vim.fn.exists(":Oil") == 0 then
+  map("n", "<leader>e", vim.cmd.Ex, { desc = "File Explorer" })
+end
 map("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>", { desc = "Make it Rain" })
 
 -- new file

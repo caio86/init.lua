@@ -97,4 +97,14 @@ return {
       require("gitsigns").setup(opts)
     end,
   },
+  {
+    "stevearc/oil.nvim",
+    cmd = { "Oil" },
+    keys = {
+      { "<leader>e", "<cmd>Oil<cr>", desc = "File Explorer (Oil)" },
+    },
+    opts = {},
+    -- Optional dependencies
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+  },
 }

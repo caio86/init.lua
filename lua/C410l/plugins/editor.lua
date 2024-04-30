@@ -99,6 +99,7 @@ return {
   },
   {
     "stevearc/oil.nvim",
+    lazy = false,
     cmd = { "Oil" },
     keys = {
       { "<leader>e", "<cmd>Oil<cr>", desc = "File Explorer (Oil)" },

@@ -66,7 +66,6 @@ return {
       -- Find the extra bundles that should be passed on the jdtls command-line
       -- if nvim-dap is enabled with java debug/test.
       local mason_registry = require("mason-registry")
-      print(mason_registry.get_package("jdtls"):get_install_path())
       local bundles = {}
       if opts.dap and mason_registry.is_installed("java_debug_adapter") then
         local java_dbg_pkg = mason_registry.get_package("java_debug_adapter")

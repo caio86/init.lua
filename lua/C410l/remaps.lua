@@ -8,7 +8,7 @@ local function map(mode, lhs, rhs, opts)
 end
 
 -- tmux-sessionizer to ctrl+f
-map("n", "<C-f>", function()
+map("n", "<leader><C-f>", function()
   if not os.getenv("TMUX") then
     -- not in Tmux
     os.execute("tmux-sessionizer")

@@ -52,7 +52,7 @@ require("mason-lspconfig").setup({
       require("lspconfig")[server_name].setup(server)
     end,
     jdtls = function()
-      return true
+      return false
     end,
   },
 })

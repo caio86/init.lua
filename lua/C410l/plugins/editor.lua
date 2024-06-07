@@ -37,7 +37,19 @@ return {
       }, { prefix = "<leader>" })
     end,
   },
-  { "mbbill/undotree" },
+  {
+    "mbbill/undotree",
+    event = "VeryLazy",
+    config = function()
+      local wk = require("which-key")
+      wk.register({
+        ["<leader>U"] = {
+          vim.cmd.UndotreeToggle,
+          "Undo Tree",
+        },
+      })
+    end,
+  },
   {
     "theprimeagen/harpoon",
     event = "VeryLazy",

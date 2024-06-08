@@ -40,9 +40,9 @@ return {
           local cmd = vim.deepcopy(opts.cmd)
           if project_name then
             vim.list_extend(cmd, {
-              "--configuration",
+              "-configuration",
               opts.jdtls_config_dir(project_name),
-              "--data",
+              "-data",
               opts.jdtls_workspace_dir(project_name),
             })
           end

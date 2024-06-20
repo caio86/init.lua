@@ -19,17 +19,15 @@ local formatting_style = {
   -- default fields order i.e completion word + item.kind + item.kind icons
   fields = field_arrangement[cmp_style] or { "abbr", "kind", "menu" },
 
-  format = require("lspkind").cmp_format({
-    with_text = true,
-    mode = "symbol_text",
-    menu = {
-      luasnip = "[LuaSnip]",
-      nvim_lsp = "[LSP]",
-      buffer = "[Buffer]",
-      path = "[Path]",
-      nvim_lua = "[Lua]",
-    },
-  }),
+  format = function(_, item)
+    local icons = require("C410l.icons").kinds
+    if icons[item.kind] then
+      item.kind = icons[item.kind] .. item.kind
+    end
+    -- item.kind = item.kind .. (cmp_ui.lspkind_text and (" [" .. entry.source.name .. "]") or "")
+
+    return item
+  end,
 }
 
 local options = {

@@ -46,6 +46,22 @@ local plugins = {
       vim.g.db_ui_use_nerd_fonts = 1
     end,
   },
+
+  {
+    "Exafunction/codeium.nvim",
+    event = "VeryLazy",
+    build = ":Codeium Auth",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "hrsh7th/nvim-cmp",
+    },
+    opts = {
+      enable_chat = true,
+    },
+    config = function(_, opts)
+      require("codeium").setup(opts)
+    end,
+  },
 }
 
 return plugins

@@ -93,11 +93,11 @@ local options = {
   }),
 
   sources = cmp.config.sources({
-    { name = "nvim_lsp" },
-    { name = "luasnip" },
-    { name = "buffer" },
-    { name = "nvim_lua" },
-    { name = "path" },
+    { name = "nvim_lsp", priority = 100 },
+    { name = "luasnip", priority = 90 },
+    { name = "buffer", priority = 90 },
+    { name = "nvim_lua", priority = 60 },
+    { name = "path", priority = 60 },
     { name = "crates" },
   }),
 }

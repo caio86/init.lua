@@ -1,4 +1,6 @@
+vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
 local cmp = require("cmp")
+local defaults = require("cmp.config.default")()
 local luasnip = require("luasnip")
 
 local cmp_ui = {
@@ -32,7 +34,7 @@ local formatting_style = {
 
 local options = {
   completion = {
-    completeopt = "menu,menuone,preview,noselect",
+    completeopt = "menu,menuone,preview,noinsert",
   },
   window = {
     completion = cmp.config.window.bordered(),
@@ -44,9 +46,12 @@ local options = {
     end,
   },
   experimental = {
-    native_menu = false,
-    ghost_text = false,
+    ghost_text = {
+      hl_group = "CmpGhostText",
+    },
   },
+
+  sorting = defaults.sorting,
 
   formatting = formatting_style,
 
@@ -91,7 +96,7 @@ local options = {
   }),
 
   sources = cmp.config.sources({
-    { name = "codeium", priority = 100 },
+    { name = "codeium", priority = 101, group_index = 1 },
     { name = "nvim_lsp", priority = 100 },
     { name = "luasnip", priority = 90 },
     { name = "buffer", priority = 90 },

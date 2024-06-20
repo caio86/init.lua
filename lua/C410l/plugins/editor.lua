@@ -52,37 +52,48 @@ return {
   },
   {
     "theprimeagen/harpoon",
+    branch = "harpoon2",
     event = "VeryLazy",
-    config = function()
-      local mark = require("harpoon.mark")
-      local ui = require("harpoon.ui")
-      local wk = require("which-key")
-
-      wk.register({
-        ["<leader>a"] = { mark.add_file, "Harpoon Add File" },
-        ["<C-e>"] = { ui.toggle_quick_menu, "Harpoon Toggle Quick Menu" },
-
-        ["<leader>1"] = {
-          function()
-            ui.nav_file(1)
-          end,
-          "Harpoon File 1",
+    opt = {
+      menu = {
+        width = vim.api.nvim_win_get_width(0) - 4,
+      },
+      {
+        settings = {
+          save_on_toggle = true,
         },
-
-        ["<leader>2"] = {
+      },
+    },
+    keys = function()
+      local harpoon = require("harpoon")
+      local keys = {
+        {
+          "<leader>a",
           function()
-            ui.nav_file(2)
+            harpoon:list():add()
           end,
-          "Harpoon File 2",
+          desc = "Harpoon Add File",
         },
-
-        ["<leader>3"] = {
+        {
+          "<C-e>",
           function()
-            ui.nav_file(3)
+            harpoon.ui:toggle_quick_menu(harpoon:list())
           end,
-          "Harpoon File 3",
+          desc = "Harpoon Toggle Quick Menu",
         },
-      })
+      }
+
+      for i = 1, 5 do
+        table.insert(keys, {
+          "<leader>" .. i,
+          function()
+            harpoon:list():select(i)
+          end,
+          desc = "Harpoon File " .. i,
+        })
+      end
+
+      return keys
     end,
   },
   {

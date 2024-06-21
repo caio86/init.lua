@@ -41,6 +41,7 @@ opt.splitright = true
 -- misc
 opt.scrolloff = 8
 opt.signcolumn = "yes"
+opt.statuscolumn = [[%!v:lua.require('C410l.statuscolumn').myStatusColumn()]]
 opt.conceallevel = 2
 opt.confirm = true
 opt.cursorline = true

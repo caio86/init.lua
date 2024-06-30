@@ -5,6 +5,7 @@ local on_attach = base.on_attach
 local servers = {
   tsserver = {},
   pyright = {},
+  jdtls = {},
   lua_ls = {
     -- cmd = {...},
     -- filetypes = { ...},

@@ -116,6 +116,37 @@ return {
       return require("C410l.plugins.configs.cmp")
     end,
     config = function(_, opts)
+      vim.g.codeium_enabled = true
+
+      local function add_codeium(sources)
+        table.insert(sources, { name = "codeium", priority = 101, group_index = 1 })
+      end
+
+      local function remove_codeium(sources)
+        for i = #sources, 1, -1 do
+          if sources[i].name == "codeium" then
+            table.remove(sources, i)
+          end
+        end
+      end
+
+      vim.api.nvim_create_user_command("ToggleCodeium", function()
+        local Util = require("lazy.core.util")
+        local cmp = require("cmp")
+        local sources = cmp.get_config().sources
+
+        if vim.g.codeium_enabled then
+          remove_codeium(sources)
+          Util.warn("Disabled codeium", { title = "Option" })
+        else
+          add_codeium(sources)
+          Util.info("Enabled codeium", { title = "Option" })
+        end
+        vim.g.codeium_enabled = not vim.g.codeium_enabled
+
+        cmp.setup({ sources = sources })
+      end, { desc = "Toggle codeium source for cmp" })
+
       require("cmp").setup(opts)
     end,
   },

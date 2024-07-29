@@ -230,6 +230,7 @@ return {
             desc = "Copy path to Clipboard",
           },
           ["P"] = { "toggle_preview", config = { use_float = false } },
+          ["Z"] = "expand_all_nodes",
         },
       },
     },

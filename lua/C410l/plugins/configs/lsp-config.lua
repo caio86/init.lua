@@ -1,4 +1,4 @@
-local base = require("C410l.plugins.configs.lspconfig")
+local base = require("C410l.plugins.configs.base-lsp")
 local capabilities = base.capabilities
 local on_attach = base.on_attach
 

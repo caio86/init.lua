@@ -1,5 +1,7 @@
 local java_filetype = { "java" }
 
+---@param config table
+---@param custom function | table | nil
 local function extend_or_override(config, custom, ...)
   if type(custom) == "function" then
     config = custom(config, ...) or config
@@ -115,7 +117,7 @@ return {
           local client = vim.lsp.get_client_by_id(args.data.client_id)
           if client and client.name == "jdtls" then
             -- call default on_attach keymaps
-            require("C410l.plugins.configs.lspconfig").on_attach(client, args.buf)
+            require("C410l.plugins.configs.base-lsp").on_attach(client, args.buf)
             local wk = require("which-key")
             wk.register({
               ["<leader>cx"] = { name = "+extract" },

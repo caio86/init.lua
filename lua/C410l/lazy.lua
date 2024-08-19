@@ -14,6 +14,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   spec = {
     { import = "C410l.plugins" },
+    { import = "C410l.plugins.lang" },
   },
   defaults = {
     lazy = false,

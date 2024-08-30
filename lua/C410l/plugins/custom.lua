@@ -69,6 +69,7 @@ local plugins = {
 
   {
     "Exafunction/codeium.nvim",
+    enabled = false,
     event = "VeryLazy",
     build = ":Codeium Auth",
     dependencies = {

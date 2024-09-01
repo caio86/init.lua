@@ -57,3 +57,10 @@ require("mason-lspconfig").setup({
     end,
   },
 })
+
+if vim.fn.executable("clangd") then
+  require("lspconfig")["clangd"].setup({
+    capabilities = capabilities,
+    on_attach = on_attach,
+  })
+end

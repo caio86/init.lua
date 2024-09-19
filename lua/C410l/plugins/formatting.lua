@@ -20,7 +20,7 @@ return {
       formatters_by_ft = {
         lua = { "stylua" },
         go = { "goimports", "gofmt" },
-        nix = { "nixpkgs_fmt" },
+        nix = { "nixfmt" },
         sh = { "shfmt" },
         -- Conform can also run multiple formatters sequentially
         python = { "isort", "black" },

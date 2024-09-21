@@ -18,6 +18,8 @@ map("n", "<leader><C-f>", function()
   end
 end, { desc = "Tmux sessionizer" })
 
+map({ "n", "v" }, "<C-S>", "<cmd>w<cr>", { desc = "Save File" })
+
 -- keymaps
 -- If oil is not installed, use Netrw
 if vim.fn.exists(":Oil") == 0 then

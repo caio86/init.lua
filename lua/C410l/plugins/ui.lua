@@ -11,11 +11,15 @@ return {
     opts = function()
       return require("C410l.plugins.configs.others").which_key
     end,
-    config = function(_, opts)
-      local wk = require("which-key")
-      wk.setup(opts)
-      wk.register(opts.defaults)
-    end,
+    keys = {
+      {
+        "<leader>?",
+        function()
+          require("which-key").show({ global = false })
+        end,
+        desc = "Buffer Local Keymaps (which-key)",
+      },
+    },
   },
   {
     "akinsho/bufferline.nvim",

@@ -106,20 +106,6 @@ return {
       return ret
     end,
     config = function(_, opts)
-      -- Get system information
-      local system_name = vim.loop.os_uname().sysname
-
-      if system_name == "Linux" then
-        local file = io.open("/etc/os-release", "r")
-        if file then
-          local content = file:read("*all")
-          file:close()
-          if string.find(content, "ID=nixos") then
-            vim.g.system_id = "nixos"
-          end
-        end
-      end
-
       vim.diagnostic.config(opts.diagnostics)
 
       local servers = opts.servers
@@ -168,7 +154,7 @@ return {
           if server_opts.enabled ~= false then
             -- run manual setup if mason=false or if this is a server that cannot be installed with mason-lspconfig
             if
-              vim.g.system_id == "nixos" and server ~= "jdtls"
+              vim.g.is_nixos and server ~= "jdtls"
               or server_opts.mason == false
               or not vim.tbl_contains(all_mslp_servers, server)
             then
@@ -224,11 +210,27 @@ return {
     opts_extend = { "ensure_installed" },
     opts = {
       ensure_installed = {
+        "stylua",
         "shfmt",
       },
     },
-    ---@param opts MasonSettings | {ensure_installed: string[]}
     config = function(_, opts)
+      if vim.g.is_nixos then
+        local function has_item(tbl, item)
+          for _, value in pairs(tbl) do
+            if value == item then
+              return true
+            end
+          end
+          return false
+        end
+
+        if has_item(opts.ensure_installed, "java-test") then
+          opts.ensure_installed = { "java-debug-adapter", "java-test" }
+        else
+          opts.ensure_installed = {}
+        end
+      end
       require("mason").setup(opts)
       local mr = require("mason-registry")
       mr:on("package:install:success", function()

@@ -1,6 +1,21 @@
+-- Get system information
+local system_name = vim.loop.os_uname().sysname
+
+if system_name == "Linux" then
+  local file = io.open("/etc/os-release", "r")
+  if file then
+    local content = file:read("*all")
+    file:close()
+    if string.find(content, "ID=nixos") then
+      vim.g.is_nixos = true
+    end
+  end
+end
+
 require("C410l.set")
 require("C410l.remaps")
 require("C410l.lazy")
+
 local on_attach = require("C410l.plugins.configs.base-lsp").on_attach
 
 local autocmd = vim.api.nvim_create_autocmd

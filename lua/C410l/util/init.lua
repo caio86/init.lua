@@ -1,6 +1,6 @@
 LazyUtil = require("lazy.core.util")
 
----@class C410l.util: LazyUtilCore
+---@class C410l.util
 ---@field lsp C410l.util.lsp
 ---@field extras C410l.util.extras
 ---@field root C410l.util.root

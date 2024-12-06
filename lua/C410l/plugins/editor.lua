@@ -15,6 +15,7 @@ return {
       end,
     },
     opts = function()
+      ---@diagnostic disable-next-line: different-requires
       return require("C410l.plugins.configs.telescope")
     end,
     config = function(_, opts)
@@ -23,40 +24,34 @@ return {
       local telescope = require("telescope")
       telescope.setup(opts.options)
 
-      wk.register({
-        ["<space>"] = { opts.project_files, "Find File" },
-        f = {
-          f = { builtin.find_files, "Find File" },
-          b = { builtin.buffers, "Find Buffer" },
-          g = { builtin.live_grep, "Find with Grep" },
-          h = { builtin.help_tags, "Find Help" },
-          w = { builtin.grep_string, "Find Word" },
-        },
-        s = {
-          ['"'] = { builtin.registers, "Registers" },
-          a = { builtin.autocommands, "Autocommands" },
-          b = { builtin.current_buffer_fuzzy_find, "Buffer" },
-          c = { builtin.command_history, "Command History" },
-          C = { builtin.commands, "Commands" },
-          d = { "<cmd>Telescope diagnostics bufnr=0<cr>", "Document Diagnostics" },
-          D = { builtin.diagnostics, "Workspace Diagnostics" },
-          h = { builtin.help_tags, "Help" },
-          H = { builtin.highlights, "Highlights" },
-          j = { builtin.jumplist, "Jumplist" },
-          M = { builtin.man_pages, "Man Pages" },
-          m = { builtin.marks, "Marks" },
-          o = { builtin.vim_options, "Options" },
-          R = { builtin.resume, "Resume" },
-          q = { builtin.quickfix, "Quickfix" },
-        },
-        g = {
-          c = { builtin.git_commits, "Git Commits" },
-          C = { builtin.git_bcommits, "Git Buffer Commits" },
-          S = { builtin.git_status, "Git Status" },
-          b = { builtin.git_branches, "Git Branches" },
-        },
-        uC = { builtin.colorscheme, "Colorscheme" },
-      }, { prefix = "<leader>" })
+      wk.add({
+        { "<leader><space>", opts.project_files, desc = "Find File" },
+        { "<leader>fb", builtin.buffers, desc = "Find Buffer" },
+        { "<leader>ff", builtin.find_files, desc = "Find File" },
+        { "<leader>fg", builtin.live_grep, desc = "Find with Grep" },
+        { "<leader>fh", builtin.help_tags, desc = "Find Help" },
+        { "<leader>fw", builtin.grep_string, desc = "Find Word" },
+        { "<leader>gC", builtin.git_bcommits, desc = "Git Buffer Commits" },
+        { "<leader>gS", builtin.git_status, desc = "Git Status" },
+        { "<leader>gb", builtin.git_branches, desc = "Git Branches" },
+        { "<leader>gc", builtin.git_commits, desc = "Git Commits" },
+        { '<leader>s"', builtin.registers, desc = "Registers" },
+        { "<leader>sC", builtin.commands, desc = "Commands" },
+        { "<leader>sD", builtin.diagnostics, desc = "Workspace Diagnostics" },
+        { "<leader>sH", builtin.highlights, desc = "Highlights" },
+        { "<leader>sM", builtin.man_pages, desc = "Man Pages" },
+        { "<leader>sR", builtin.resume, desc = "Resume" },
+        { "<leader>sa", builtin.autocommands, desc = "Autocommands" },
+        { "<leader>sb", builtin.current_buffer_fuzzy_find, desc = "Buffer" },
+        { "<leader>sc", builtin.command_history, desc = "Command History" },
+        { "<leader>sd", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Document Diagnostics" },
+        { "<leader>sh", builtin.help_tags, desc = "Help" },
+        { "<leader>sj", builtin.jumplist, desc = "Jumplist" },
+        { "<leader>sm", builtin.marks, desc = "Marks" },
+        { "<leader>so", builtin.vim_options, desc = "Options" },
+        { "<leader>sq", builtin.quickfix, desc = "Quickfix" },
+        { "<leader>uC", builtin.colorscheme, desc = "Colorscheme" },
+      })
     end,
   },
   {
@@ -64,11 +59,10 @@ return {
     event = "VeryLazy",
     config = function()
       local wk = require("which-key")
-      wk.register({
-        ["<leader>U"] = {
-          vim.cmd.UndotreeToggle,
-          "Undo Tree",
-        },
+      wk.add({
+        "<leader>U",
+        vim.cmd.UndotreeToggle,
+        desc = "Undo Tree",
       })
     end,
   },

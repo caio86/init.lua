@@ -37,7 +37,7 @@ map({ "n", "v" }, "<leader>y", [["+y]], { desc = "Yarn to sys clip" })
 map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
 
 -- formatting
-map("n", "<leader>cf", vim.lsp.buf.format, { desc = "Format" })
+map({ "n", "x" }, "<leader>cf", vim.lsp.buf.format, { desc = "Format" })
 
 -- lazy
 map("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })

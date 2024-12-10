@@ -1,7 +1,9 @@
 return {
   { -- Autoformat
     "stevearc/conform.nvim",
+    dependencies = { "mason.nvim" },
     event = "VimEnter",
+    cmd = "ConformInfo",
     opts = {
       notify_on_error = false,
       format_on_save = function(bufnr)
@@ -49,8 +51,12 @@ return {
       {
         "<leader>cf",
         function()
-          require("conform").format({ async = true, lsp_fallback = true })
+          require("conform").format({
+            async = true,
+            lsp_fallback = true,
+          })
         end,
+        mode = { "n", "v" },
         desc = "Code Format",
       },
     },

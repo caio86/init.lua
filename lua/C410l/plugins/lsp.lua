@@ -184,10 +184,16 @@ return {
     dependencies = {
       {
         "L3MON4D3/LuaSnip",
+        lazy = true,
         -- follow latest release.
         version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
         -- install jsregexp (optional!).
         build = "make install_jsregexp",
+        dependencies = "rafamadriz/friendly-snippets",
+        opts = { history = true, delete_check_events = "TextChanged" },
+        config = function(_, opts)
+          require("C410l.plugins.configs.others").luasnip(opts)
+        end,
       },
       {
         "hrsh7th/cmp-nvim-lsp",

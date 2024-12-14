@@ -5,6 +5,12 @@ return {
     event = "VimEnter",
     cmd = "ConformInfo",
     opts = {
+      default_format_opts = {
+        timeout_ms = 3000,
+        async = false,
+        quiet = false,
+        lsp_format = "fallback",
+      },
       notify_on_error = false,
       format_on_save = function(bufnr)
         if vim.g.disable_autoformat then
@@ -21,17 +27,12 @@ return {
       end,
       formatters_by_ft = {
         lua = { "stylua" },
-        go = { "goimports", "gofmt" },
-        nix = { "nixfmt" },
         sh = { "shfmt" },
         -- Conform can also run multiple formatters sequentially
         python = { "isort", "black" },
-        --
-        -- You can use a sub-list to tell conform to run *until* a formatter
-        -- is found.
-        javascript = { { "prettierd", "prettier" } },
-
-        ["_"] = { "trim_whitespace", "prettierd" },
+      },
+      formatters = {
+        injected = { options = { ignore_erros = true } },
       },
     },
     keys = {
@@ -51,10 +52,7 @@ return {
       {
         "<leader>cf",
         function()
-          require("conform").format({
-            async = true,
-            lsp_fallback = true,
-          })
+          require("conform").format({})
         end,
         mode = { "n", "v" },
         desc = "Code Format",

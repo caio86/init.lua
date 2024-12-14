@@ -76,6 +76,9 @@ function M.get_pkg_path(pkg, path, opts)
   pcall(require, "mason")
   local root = vim.env.MASON or (vim.fn.stdpath("data") .. "/mason")
   opts = opts or {}
+  if vim.g.is_nixos then
+    opts.warn = false
+  end
   opts.warn = opts.warn == nil and true or opts.warn
   path = path or ""
   local ret = root .. "/packages/" .. pkg .. "/" .. path

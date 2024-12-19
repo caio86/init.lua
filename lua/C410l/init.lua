@@ -1,7 +1,7 @@
 -- Get system information
 local system_name = vim.loop.os_uname().sysname
 
-if system_name == "Linux" then
+if system_name == "Linux" or os.getenv("NIX_NEOVIM") == "1" then
   local file = io.open("/etc/os-release", "r")
   if file then
     local content = file:read("*all")
